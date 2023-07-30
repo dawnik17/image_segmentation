@@ -1,0 +1,68 @@
+decoder_config:
+  block5:
+    in_channels: 1024
+    kernel_size: 3
+    out_channels: 1024
+    padding: 1
+    stride: 1
+  block4:
+    in_channels: 1024
+    kernel_size: 2
+    out_channels: 512
+    padding: 0
+    stride: 2
+  block3:
+    in_channels: 512
+    kernel_size: 2
+    out_channels: 256
+    padding: 0
+    stride: 2
+  block2:
+    in_channels: 256
+    kernel_size: 2
+    out_channels: 128
+    padding: 0
+    stride: 2
+  block1:
+    in_channels: 128
+    kernel_size: 2
+    out_channels: 64
+    padding: 0
+    stride: 2
+encoder_config:
+  block1:
+    all_padding: false
+    in_channels: 1
+    maxpool: true
+    n_layers: 2
+    out_channels: 64
+  block2:
+    all_padding: false
+    in_channels: 64
+    maxpool: true
+    n_layers: 2
+    out_channels: 128
+  block3:
+    all_padding: false
+    in_channels: 128
+    maxpool: true
+    n_layers: 2
+    out_channels: 256
+  block4:
+    all_padding: false
+    in_channels: 256
+    maxpool: true
+    n_layers: 2
+    out_channels: 512
+  block5:
+    all_padding: false
+    in_channels: 512
+    maxpool: false
+    n_layers: 2
+    out_channels: 512
+  block6:
+    all_padding: true
+    in_channels: 512
+    maxpool: false
+    n_layers: 2
+    out_channels: 1024
