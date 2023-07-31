@@ -2,59 +2,59 @@
 # Input shape [1, 572, 572]
 # Output shape [64, 388, 388]
 decoder_config:
-  block4:
+  block4: # [1024, 28, 28]
     in_channels: 1024
     kernel_size: 2
     out_channels: 512
     padding: [0, 0]
-    stride: 2
-  block3:
+    stride: 2 # [512, 52, 52]
+  block3: # [512, 52, 52]
     in_channels: 512
     kernel_size: 2
     out_channels: 256
     padding: [0, 0]
-    stride: 2
-  block2:
+    stride: 2 # [256, 100, 100]
+  block2: # [256, 100, 100]
     in_channels: 256
     kernel_size: 2
     out_channels: 128
     padding: [0, 0]
-    stride: 2
-  block1:
+    stride: 2 # [128, 196, 196]
+  block1: # [128, 196, 196]
     in_channels: 128
     kernel_size: 2
     out_channels: 64
     padding: [0, 0]
-    stride: 2
+    stride: 2 # [64, 388, 388]
 encoder_config:
-  block1:
+  block1: # [1, 572, 572]
     all_padding: false
     in_channels: 1
     maxpool: true
     n_layers: 2
-    out_channels: 64
-  block2:
+    out_channels: 64 # [64, 568/2, 568/2] = [64, 284, 284]
+  block2: # [64, 568/2, 568/2] = [64, 284, 284]
     all_padding: false
     in_channels: 64
     maxpool: true
     n_layers: 2
-    out_channels: 128
-  block3:
+    out_channels: 128 # [128, 280/2, 280/2] = [128, 140, 140]
+  block3: # [128, 280/2, 280/2] = [128, 140, 140]
     all_padding: false
     in_channels: 128
     maxpool: true
     n_layers: 2
-    out_channels: 256
-  block4:
+    out_channels: 256 # [256, 136/2, 136/2] = [256, 68, 68]
+  block4: # [256, 136/2, 136/2] = [256, 68, 68]
     all_padding: false
     in_channels: 256
     maxpool: true
     n_layers: 2
-    out_channels: 512
-  block5:
+    out_channels: 512  # [512, 64/2, 64/2] = [512, 32, 32]
+  block5: # [512, 64/2, 64/2] = [512, 32, 32]
     all_padding: false
     in_channels: 512
     maxpool: false
     n_layers: 2
-    out_channels: 1024
+    out_channels: 1024 # [1024, 28, 28]
 nclasses: 2
