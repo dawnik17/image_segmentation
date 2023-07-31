@@ -1,33 +1,30 @@
+# Original UNet Paper Configuration
+# Input shape [1, 572, 572]
+# Output shape [64, 388, 388]
 decoder_config:
-  block5:
-    in_channels: 1024
-    kernel_size: 3
-    out_channels: 1024
-    padding: 1
-    stride: 1
   block4:
     in_channels: 1024
     kernel_size: 2
     out_channels: 512
-    padding: 0
+    padding: [0, 0]
     stride: 2
   block3:
     in_channels: 512
     kernel_size: 2
     out_channels: 256
-    padding: 0
+    padding: [0, 0]
     stride: 2
   block2:
     in_channels: 256
     kernel_size: 2
     out_channels: 128
-    padding: 0
+    padding: [0, 0]
     stride: 2
   block1:
     in_channels: 128
     kernel_size: 2
     out_channels: 64
-    padding: 0
+    padding: [0, 0]
     stride: 2
 encoder_config:
   block1:
@@ -59,10 +56,5 @@ encoder_config:
     in_channels: 512
     maxpool: false
     n_layers: 2
-    out_channels: 512
-  block6:
-    all_padding: true
-    in_channels: 512
-    maxpool: false
-    n_layers: 2
     out_channels: 1024
+nclasses: 2

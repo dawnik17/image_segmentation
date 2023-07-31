@@ -1,0 +1,81 @@
+# Input (1, 512, 512)
+# Output (64, 512, 512)
+decoder_config:
+  block5: # (1024, 32, 32)
+    in_channels: 1024
+    kernel_size: 3
+    out_channels: 1024
+    padding:
+    - 1
+    - 1
+    stride: 1 # (1024, 32, 32)
+  block4: # (1024, 32, 32)
+    in_channels: 1024
+    kernel_size: 2
+    out_channels: 512
+    padding:
+    - 0
+    - 1
+    stride: 2 # (512, 64, 64)
+  block3: # (512, 64, 64)
+    in_channels: 512
+    kernel_size: 2
+    out_channels: 256
+    padding:
+    - 0
+    - 1
+    stride: 2 # (256, 128, 128)
+  block2: # (256, 128, 128)
+    in_channels: 256
+    kernel_size: 2
+    out_channels: 128
+    padding:
+    - 0
+    - 1
+    stride: 2 # (128, 256, 256)
+  block1: # (128, 256, 256)
+    in_channels: 128
+    kernel_size: 2
+    out_channels: 64
+    padding:
+    - 0
+    - 1
+    stride: 2 # (64, 512, 512)
+encoder_config:
+  block1: # (1, 512, 512)
+    all_padding: true
+    in_channels: 1
+    maxpool: true
+    n_layers: 2
+    out_channels: 64 # (64, 256, 256)
+  block2: # (64, 256, 256)
+    all_padding: true
+    in_channels: 64
+    maxpool: true
+    n_layers: 2
+    out_channels: 128 # (128, 128, 128)
+  block3: # (128, 128, 128)
+    all_padding: true
+    in_channels: 128
+    maxpool: true
+    n_layers: 2
+    out_channels: 256 # (256, 64, 64)
+  block4: # (256, 64, 64)
+    all_padding: true
+    in_channels: 256
+    maxpool: true
+    n_layers: 2
+    out_channels: 512 # (512, 32, 32)
+  block5: # (512, 32, 32)
+    all_padding: true
+    in_channels: 512
+    maxpool: false
+    n_layers: 2
+    out_channels: 512 # (512, 32, 32)
+  block6: # (512, 32, 32)
+    all_padding: true
+    in_channels: 512
+    maxpool: false
+    n_layers: 2
+    out_channels: 1024 # (1024, 32, 32)
+nclasses: 2
