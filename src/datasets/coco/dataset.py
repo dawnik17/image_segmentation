@@ -1,10 +1,10 @@
 import os.path
 from typing import Any, Callable, List, Optional, Tuple
 
+import matplotlib.pyplot as plt
+import numpy as np
 from PIL import Image
 from torchvision.datasets import VisionDataset
-import numpy as np
-import matplotlib.pyplot as plt
 
 
 class CocoDetection(VisionDataset):
@@ -129,9 +129,9 @@ class CocoDetection(VisionDataset):
         fig, axs = plt.subplots(1, 2, figsize=(7, 3))
 
         axs[0].imshow(image.permute(1, 2, 0))
-        axs[0].set_title('Image')
-        
+        axs[0].set_title("Image")
+
         axs[1].imshow(mask.sum(0, keepdim=True).permute(1, 2, 0))
-        axs[1].set_title('Mask')
-        
+        axs[1].set_title("Mask")
+
         plt.show()
