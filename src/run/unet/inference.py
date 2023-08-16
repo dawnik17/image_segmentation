@@ -4,6 +4,7 @@ import albumentations as A
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
+import torch.nn as nn
 import yaml
 from albumentations.pytorch import ToTensorV2
 from easydict import EasyDict
@@ -62,8 +63,10 @@ class ResUnetInfer:
             tensor shape=[batch, num_anchors_per_scale, scale, scale, 5 + num_classes]
             """
             output_tensor = self.model(input_tensor.to(self.device))
-        output_tensor = output_tensor.squeeze(0)
+        
         output_tensor = torch.sigmoid(output_tensor)
+        output_tensor = nn.UpsamplingBilinear2d(size=(image.shape[0], image.shape[1]))(output_tensor)
+        output_tensor = output_tensor.squeeze(0)
 
         return output_tensor.permute(1, 2, 0).cpu().numpy()
     
