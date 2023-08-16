@@ -57,25 +57,29 @@ class ResUnetInfer:
         self.model.eval()
         input_tensor = self.transform(image=image)["image"].unsqueeze(0)
 
+        # get mask
         with torch.no_grad():
             """
-            output = list of tensors
-            tensor shape=[batch, num_anchors_per_scale, scale, scale, 5 + num_classes]
+            output_tensor = [batch, 1, 224, 224]
+            batch = 1
             """
             output_tensor = self.model(input_tensor.to(self.device))
         
-        output_tensor = torch.sigmoid(output_tensor)
-        output_tensor = nn.UpsamplingBilinear2d(size=(image.shape[0], image.shape[1]))(output_tensor)
-        output_tensor = output_tensor.squeeze(0)
+        mask = torch.sigmoid(output_tensor)
+        mask = nn.UpsamplingBilinear2d(size=(image.shape[0], image.shape[1]))(mask)
+        mask = mask.squeeze(0)
 
+        # add zeros for green and blue channels
+        # our mask will be red in colour
         zero_channels = torch.zeros((2, image.shape[0], image.shape[1]), device=self.device)
-        output_tensor = torch.cat([output_tensor, zero_channels], dim=0)
-        output_tensor = output_tensor.permute(1,2,0).cpu().numpy()
-        output_tensor = np.uint8(255 * output_tensor)
+        mask = torch.cat([mask, zero_channels], dim=0)
+        mask = mask.permute(1,2,0).cpu().numpy()
+        mask = np.uint8(255 * mask)
         
-        output_tensor = (1 - image_weight) * output_tensor + image_weight * image
-        output_tensor = output_tensor / np.max(output_tensor)
-        return np.uint8(255 * output_tensor)
+        # overlap image and mask
+        mask = (1 - image_weight) * mask + image_weight * image
+        mask = mask / np.max(mask)
+        return np.uint8(255 * mask)
     
     @staticmethod
     def load_image_as_array(image_path):
