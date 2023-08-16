@@ -68,7 +68,7 @@ class ResUnetInfer:
         output_tensor = nn.UpsamplingBilinear2d(size=(image.shape[0], image.shape[1]))(output_tensor)
         output_tensor = output_tensor.squeeze(0)
 
-        zero_channels = torch.zeros((2, image.shape[0], image.shape[1]))
+        zero_channels = torch.zeros((2, image.shape[0], image.shape[1]), device=self.device)
         output_tensor = torch.cat([output_tensor, zero_channels], dim=0)
         output_tensor = output_tensor.permute(1,2,0).cpu().numpy()
         output_tensor = np.uint8(255 * output_tensor)
