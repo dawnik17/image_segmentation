@@ -66,9 +66,9 @@ class ResUnetInfer:
         
         output_tensor = torch.sigmoid(output_tensor)
         output_tensor = nn.UpsamplingBilinear2d(size=(image.shape[0], image.shape[1]))(output_tensor)
-        output_tensor = output_tensor.squeeze(0)
+        output_tensor = output_tensor.squeeze(0).squeeze(0)
 
-        return output_tensor.permute(1, 2, 0).cpu().numpy()
+        return output_tensor.cpu().numpy()
     
     @staticmethod
     def load_image_as_array(image_path):
