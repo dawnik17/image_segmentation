@@ -53,7 +53,7 @@ class ResUnetInfer:
 
         return EasyDict(yaml_data)
 
-    def infer(self, image, image_weight=0.5):
+    def infer(self, image, image_weight=0.01):
         self.model.eval()
         input_tensor = self.transform(image=image)["image"].unsqueeze(0)
 
