@@ -1,15 +1,10 @@
 import os
 
 import albumentations as A
-import cv2
-import matplotlib.pyplot as plt
-import numpy as np
 import torch
 import yaml
 from albumentations.pytorch import ToTensorV2
 from easydict import EasyDict
-from PIL import Image
-from tqdm import tqdm
 
 from src.models.unet.resunet import UNet as Model
 
