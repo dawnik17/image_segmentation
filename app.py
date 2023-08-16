@@ -23,7 +23,7 @@ demo = gr.Interface(
             maximum=1,
             value=0.5,
             label="Mask Transparency",
-            info="Mask opacity for image segmentation overlay",
+            info="Mask transparency for image segmentation overlay",
         ),
     ],
     outputs=[
