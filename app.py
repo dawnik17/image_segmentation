@@ -17,12 +17,22 @@ demo = gr.Interface(
             shape=(224, 224),
             label="Input Image",
             value="./sample/bird_plane.jpeg",
-        )
+        ),
+        gr.Slider(
+            minimum=0,
+            maximum=1,
+            value=0.5,
+            label="Mask Transparency",
+            info="Mask opacity for image segmentation overlay",
+        ),
     ],
     outputs=[
         gr.Image(),
     ],
-    examples=[[os.path.join("./sample/", f)] for f in os.listdir("./sample/")],
+    examples=[
+        [os.path.join("./sample/", f)]
+        for f in os.listdir("./sample/")
+    ],
 )
 
 
