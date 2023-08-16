@@ -53,7 +53,7 @@ class ResUnetInfer:
 
         return EasyDict(yaml_data)
 
-    def infer(self, image):
+    def infer(self, image, image_weight=0.5):
         self.model.eval()
         input_tensor = self.transform(image=image)["image"].unsqueeze(0)
 
@@ -66,9 +66,13 @@ class ResUnetInfer:
         
         output_tensor = torch.sigmoid(output_tensor)
         output_tensor = nn.UpsamplingBilinear2d(size=(image.shape[0], image.shape[1]))(output_tensor)
-        output_tensor = output_tensor.squeeze(0).squeeze(0)
+        output_tensor = output_tensor.squeeze(0)
 
-        return output_tensor.cpu().numpy()
+        output_tensor = output_tensor.repeat(3, 1, 1).permute(1,2,0).cpu().numpy()
+        
+        output_tensor = (1 - image_weight) * output_tensor + image_weight * image
+        output_tensor = output_tensor / np.max(output_tensor)
+        return np.uint8(255 * output_tensor)
     
     @staticmethod
     def load_image_as_array(image_path):
