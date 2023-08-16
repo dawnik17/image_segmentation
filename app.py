@@ -5,8 +5,10 @@ import gradio as gr
 from src.run.unet.inference import ResUnetInfer
 
 
-infer = ResUnetInfer(model_path="./checkpoint/resunet/decoder.pt", 
-                     config_path="./src/models/unet/config/resnet_config.yml")
+infer = ResUnetInfer(
+    model_path="./checkpoint/resunet/decoder.pt",
+    config_path="./src/models/unet/config/resnet_config.yml",
+)
 
 demo = gr.Interface(
     fn=infer.infer,
@@ -20,10 +22,7 @@ demo = gr.Interface(
     outputs=[
         gr.Image(),
     ],
-    examples=[
-        [os.path.join("./sample/", f)]
-        for f in os.listdir("./sample/")
-    ],
+    examples=[[os.path.join("./sample/", f)] for f in os.listdir("./sample/")],
 )
 
 

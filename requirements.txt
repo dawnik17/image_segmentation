@@ -4,9 +4,9 @@ easydict
 gradio
 torchvision
 numpy
-grad-cam
+grad - cam
 Pillow
 albumentations
 tqdm
-opencv-python
+opencv - python
 matplotlib

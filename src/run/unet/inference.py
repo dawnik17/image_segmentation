@@ -21,7 +21,7 @@ class ResUnetInfer:
 
         self.config = self.load_config(config_path=config_path)
         self.model = self.load_model(model_path=model_path)
-        
+
         self.transform = A.Compose(
             [
                 A.Resize(self.config.input_size[0], self.config.input_size[1]),
@@ -35,21 +35,25 @@ class ResUnetInfer:
         )
 
     def load_model(self, model_path):
-        model = Model(decoder_config=self.config.decoder_config).to(self.device)
+        model = Model(
+            decoder_config=self.config.decoder_config, nclasses=self.config.nclasses
+        ).to(self.device)
 
         if os.path.isfile(model_path):
             checkpoint = torch.load(model_path, map_location=self.device)
-            model.decoder.load_state_dict(checkpoint["decoder_state_dict"], strict=False)
+            model.decoder.load_state_dict(
+                checkpoint["decoder_state_dict"], strict=False
+            )
             model.output.load_state_dict(checkpoint["output_state_dict"], strict=False)
 
         return model
-    
+
     def load_config(self, config_path):
-        with open(config_path, 'r') as file:
+        with open(config_path, "r") as file:
             yaml_data = yaml.safe_load(file)
 
         return EasyDict(yaml_data)
-    
+
     def infer(self, image):
         self.model.eval()
         input_tensor = self.transform(image=image)["image"].unsqueeze(0)

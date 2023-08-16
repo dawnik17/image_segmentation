@@ -14,7 +14,7 @@ class DecoderLayer(nn.Module):
             stride=stride,
             padding=padding[0],
         )
-        
+
         self.bn1 = nn.BatchNorm2d(in_channels)
 
         self.conv = nn.Sequential(
@@ -48,7 +48,7 @@ class DecoderLayer(nn.Module):
         ]
         return torch.cat((encoder_output, x), dim=1)
 
-    def forward(self, x, encoder_output):     
+    def forward(self, x, encoder_output):
         x = self.crop_cat(self.up_conv(x), encoder_output)
         x = self.bn1(x)
         return self.conv(x)
@@ -72,5 +72,5 @@ class Decoder(nn.Module):
 
     def forward(self, x, encoder_output):
         for name, block in self.decoder.items():
-            x = block(x, encoder_output[name]) 
+            x = block(x, encoder_output[name])
         return x
